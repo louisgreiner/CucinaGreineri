@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
+import CommentForm from './CommentForm'
 import styled from "styled-components"
 
 const Wrapper = styled.div `
@@ -22,7 +23,7 @@ const Column = styled.div `
 `
 
 const Main = styled.div `
-    left-padding: 50px;
+    padding-left: 50px;
 `
 
 const Recipe = props => {
@@ -44,22 +45,54 @@ const Recipe = props => {
         .catch( response => console.log(response) )
     }, [])
 
+    const handleChange = (e) => {
+        e.preventDefault()
+
+        setComment(Object.assign({}, comment, {[e.target.name]: e.target.value}))
+
+        console.log('comment:', comment)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        
+        const recipe_id = recipe.data.id
+        axios.post('/api/v1/comments', {comment, recipe_id})
+        .then(response => {
+            debugger
+            // const included = [...recipe.included, response.data.data]
+            // setRecipe({...recipe, included})
+            setComment({author: '', title: '', body: ''})
+        })
+        .catch(response => {})
+    }
+
     return(
         <Wrapper>
-            <Column>
-                <Main>
-                    {
-                        loaded &&
-                        <Header
-                            attributes={recipe.data.attributes}
-                        />
-                    }
-                    <div className='comments'></div>
-                </Main>
-            </Column>
-            <Column>
-                <div className='comment-form'>[Comment form goes here]</div>
-            </Column>
+            {
+                loaded &&
+                <Fragment>
+                    <Column>
+                        <Main>
+                            <Header
+                                attributes={recipe.data.attributes}
+                            />
+                            <div className='comments'></div>
+                        </Main>
+                    </Column>
+                    <Column>
+                        <CommentForm
+                            handleChange = {handleChange}
+                            handleSubmit = {handleSubmit}
+                            attributes = {recipe.data.attributes}
+                            comments = {recipe.data.attributes.comments}
+                            />
+                    </Column>
+                </Fragment>
+            }
         </Wrapper>
     )
 }

@@ -3,16 +3,14 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div `
     padding: 50px 100px 50px 0;
+    font-size: 30px;
 
     img{
-        height: 150px;
-        width: 150px;
+        height: 200px;
+        width: 200px;
         border-radius: 100%;
         border: 1px solid rgba(0,0,0,0,1);
-    }
-
-    h1 {
-        font-size: 30px;
+        margin-bottom: -8px;
     }
 `
 

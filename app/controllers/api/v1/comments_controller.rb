@@ -4,7 +4,7 @@ module Api
             protect_from_forgery with: :null_session
 
             def create
-                comment = Comment.new(comment_params)
+                comment = recipe.comments.new(comment_params)
 
                 if comment.save
                     render json: CommentSerializer.new(comment).serialized_json
@@ -24,6 +24,10 @@ module Api
             end
 
             private
+            def recipe
+                @recipe ||= Recipe.find(params[:recipe_id])
+            end
+
             def comment_params
                 params.require(:comment).permit(:title, :body, :author, :recipe_id)
             end
