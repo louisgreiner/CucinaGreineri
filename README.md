@@ -10,16 +10,20 @@ React on Rails project, database using PostgreSQL, to help my grandma to share h
 * How to test
 
 Create the project:
-  `rails _6.1.4.4_ new cucina_greineri --webpack=react --database=postgresql -T`
+  
+  --`rails _6.1.4.4_ new cucina_greineri --webpack=react --database=postgresql -T`
 
 Create the database:
-  `rails db:migrate`
+  
+  --`rails db:migrate`
 
-  `rails db:seed`
+  --`rails db:seed`
 
 Launch server:
-  `rails s`
+  
+  --`rails s`
 
 Connect through your favorite browser at:
-  `http://localhost:3000`
+  
+  --`http://localhost:3000`
   
