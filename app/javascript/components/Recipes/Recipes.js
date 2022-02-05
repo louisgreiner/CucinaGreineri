@@ -36,7 +36,6 @@ const Recipes = () => {
 
     useEffect(()=> {
         axios.get('/api/v1/recipes.json')
-        // .then( response => setRecipes(response.data.data))
         .then( response => setRecipes(response.data.data))
         .catch( response => console.log(response))
     }, [recipes.length]) // this array skip applying useEffect if recipes length hasn't changed

@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 
 `
 
-const SubmitBtn = styled.div`
+const SubmitButton = styled.button`
     color: #fff;
     background: #333;
     border-radius: 4px;
@@ -64,16 +64,15 @@ const CommentForm = (props) => {
             <form onSubmit={props.handleSubmit}>
                 <HeadLine>Un avis sur la recette {props.attributes.name}? Ecris un commentaire !</HeadLine>
                 <Field>
-                    <input onChange={props.handleChange} value={props.comments.author} type='text' name='author' placeholder='Auteur(e)'/>
+                    <input onChange={props.handleChange} value={props.comment.author} type='text' name='author' placeholder='Auteur(e)'/>
                 </Field>
                 <Field>
-                    <input onChange={props.handleChange} value={props.comments.title} type='text' name='title' placeholder='Titre'/>
+                    <input onChange={props.handleChange} value={props.comment.title} type='text' name='title' placeholder='Titre'/>
                 </Field>
                 <Field>
-                    <input onChange={props.handleChange} value={props.comments.body} type='text' name='body' placeholder='Commentaire'/>
+                    <input onChange={props.handleChange} value={props.comment.body} type='text' name='body' placeholder='Commentaire'/>
                 </Field>
-                {/* <SubmitButton type='submit'>Envoyer le commentaire</SubmitButton> */}
-                <SubmitBtn type="submit">Envoyer le commentaire</SubmitBtn>
+                <SubmitButton type='submit'>Envoyer le commentaire</SubmitButton>
             </form>
         </Wrapper>
     )

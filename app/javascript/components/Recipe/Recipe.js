@@ -28,14 +28,14 @@ const Main = styled.div `
 
 const Recipe = props => {
     const [recipe, setRecipe] = useState({})
-    const [comment,setComment] = useState({})
+    const [comments,setComments] = useState([])
+    const [comment,setComment] = useState({ title: '', body: '', author: '' })
     const [loaded, setLoaded] = useState(false)
 
     props = useParams()
 
     useEffect(() => {
-        const slug = props.slug
-        const url = `/api/v1/recipes/${slug}`
+        const url = `/api/v1/recipes/${props.slug}`
 
         axios.get(url)
         .then( response => {
@@ -50,7 +50,6 @@ const Recipe = props => {
 
         setComment(Object.assign({}, comment, {[e.target.name]: e.target.value}))
 
-        console.log('comment:', comment)
     }
 
     const handleSubmit = (e) => {
@@ -62,9 +61,8 @@ const Recipe = props => {
         const recipe_id = recipe.data.id
         axios.post('/api/v1/comments', {comment, recipe_id})
         .then(response => {
-            debugger
-            // const included = [...recipe.included, response.data.data]
-            // setRecipe({...recipe, included})
+            recipe.data.attributes.comments.push(response.data.data.attributes)
+            setRecipe({...recipe})
             setComment({author: '', title: '', body: ''})
         })
         .catch(response => {})
@@ -88,7 +86,7 @@ const Recipe = props => {
                             handleChange = {handleChange}
                             handleSubmit = {handleSubmit}
                             attributes = {recipe.data.attributes}
-                            comments = {recipe.data.attributes.comments}
+                            comment = {comment}
                             />
                     </Column>
                 </Fragment>
